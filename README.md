@@ -11,8 +11,9 @@ A comprehensive template for getting started with Context Engineering - the disc
 git clone https://github.com/coleam00/Context-Engineering-Intro.git
 cd Context-Engineering-Intro
 
-# 2. Set up your project rules (optional - template provided)
-# Edit CLAUDE.md to add your project-specific guidelines
+# 2. Enable GitHub Copilot custom instructions
+# The .github/copilot-instructions.md file is automatically detected by VS Code
+# No additional setup needed - GitHub Copilot will use these instructions
 
 # 3. Add examples (highly recommended)
 # Place relevant code examples in the examples/ folder
@@ -20,13 +21,13 @@ cd Context-Engineering-Intro
 # 4. Create your initial feature request
 # Edit INITIAL.md with your feature requirements
 
-# 5. Generate a comprehensive PRP (Product Requirements Prompt)
-# In Claude Code, run:
-/generate-prp INITIAL.md
+# 5. Generate a comprehensive PRP using GitHub Copilot
+# In VS Code chat, type: /generate-prp
+# Or reference the feature file: "Use the generate-prp prompt with INITIAL.md"
 
 # 6. Execute the PRP to implement your feature
-# In Claude Code, run:
-/execute-prp PRPs/your-feature-name.md
+# In VS Code chat, type: /execute-prp
+# Or reference the PRP: "Use the execute-prp prompt with PRPs/your-feature-name.md"
 ```
 
 ## 📚 Table of Contents
@@ -66,37 +67,42 @@ Context Engineering represents a paradigm shift from traditional prompt engineer
 
 ```
 context-engineering-intro/
-├── .claude/
-│   ├── commands/
-│   │   ├── generate-prp.md    # Generates comprehensive PRPs
-│   │   └── execute-prp.md     # Executes PRPs to implement features
-│   └── settings.local.json    # Claude Code permissions
+├── .github/
+│   ├── copilot-instructions.md        # GitHub Copilot global instructions
+│   ├── prompts/
+│   │   ├── generate-prp.prompt.md     # Generates comprehensive PRPs
+│   │   └── execute-prp.prompt.md      # Executes PRPs to implement features
+│   └── instructions/
+│       ├── prp-template.instructions.md    # PRP creation guidelines
+│       └── python-standards.instructions.md # Python coding standards
 ├── PRPs/
 │   ├── templates/
-│   │   └── prp_base.md       # Base template for PRPs
-│   └── EXAMPLE_multi_agent_prp.md  # Example of a complete PRP
-├── examples/                  # Your code examples (critical!)
-├── CLAUDE.md                 # Global rules for AI assistant
-├── INITIAL.md               # Template for feature requests
-├── INITIAL_EXAMPLE.md       # Example feature request
-└── README.md                # This file
+│   │   └── prp_base.md               # Base template for PRPs
+│   └── EXAMPLE_multi_agent_prp.md    # Example of a complete PRP
+├── examples/                          # Your code examples (critical!)
+├── CLAUDE.md                         # Legacy global rules (now in .github/)
+├── INITIAL.md                       # Template for feature requests
+├── INITIAL_EXAMPLE.md               # Example feature request
+└── README.md                        # This file
 ```
 
 This template doesn't focus on RAG and tools with context engineering because I have a LOT more in store for that soon. ;)
 
 ## Step-by-Step Guide
 
-### 1. Set Up Global Rules (CLAUDE.md)
+## Step-by-Step Guide
 
-The `CLAUDE.md` file contains project-wide rules that the AI assistant will follow in every conversation. The template includes:
+### 1. Set Up GitHub Copilot Instructions
+
+The `.github/copilot-instructions.md` file contains project-wide rules that GitHub Copilot will automatically follow in VS Code. The template includes:
 
 - **Project awareness**: Reading planning docs, checking tasks
-- **Code structure**: File size limits, module organization
+- **Code structure**: File size limits, module organization  
 - **Testing requirements**: Unit test patterns, coverage expectations
 - **Style conventions**: Language preferences, formatting rules
 - **Documentation standards**: Docstring formats, commenting practices
 
-**You can use the provided template as-is or customize it for your project.**
+**The provided template works out of the box - GitHub Copilot automatically detects this file.**
 
 ### 2. Create Your Initial Feature Request
 
@@ -110,7 +116,7 @@ Edit `INITIAL.md` to describe what you want to build:
 [List any example files in the examples/ folder and explain how they should be used]
 
 ## DOCUMENTATION:
-[Include links to relevant documentation, APIs, or MCP server resources]
+[Include links to relevant documentation, APIs, or resources]
 
 ## OTHER CONSIDERATIONS:
 [Mention any gotchas, specific requirements, or things AI assistants commonly miss]
@@ -124,21 +130,20 @@ PRPs (Product Requirements Prompts) are comprehensive implementation blueprints 
 
 - Complete context and documentation
 - Implementation steps with validation
-- Error handling patterns
+- Error handling patterns  
 - Test requirements
 
-They are similar to PRDs (Product Requirements Documents) but are crafted more specifically to instruct an AI coding assistant.
+In VS Code with GitHub Copilot:
+- Type `/generate-prp` in chat
+- Or say: "Use the generate-prp prompt with my INITIAL.md file"
+- Copilot will use the prompt file at `.github/prompts/generate-prp.prompt.md`
 
-Run in Claude Code:
-```bash
-/generate-prp INITIAL.md
-```
+### 4. Execute the PRP
 
-**Note:** The slash commands are custom commands defined in `.claude/commands/`. You can view their implementation:
-- `.claude/commands/generate-prp.md` - See how it researches and creates PRPs
-- `.claude/commands/execute-prp.md` - See how it implements features from PRPs
-
-The `$ARGUMENTS` variable in these commands receives whatever you pass after the command name (e.g., `INITIAL.md` or `PRPs/your-feature.md`).
+Once you have a complete PRP, implement it using:
+- Type `/execute-prp` in chat  
+- Or say: "Use the execute-prp prompt with PRPs/your-feature.md"
+- Copilot will use the prompt file at `.github/prompts/execute-prp.prompt.md`
 
 This command will:
 1. Read your feature request
@@ -289,6 +294,26 @@ examples/
 - Add your conventions
 - Include project-specific rules
 - Define coding standards
+
+## Migration from Legacy Structure
+
+This template has been updated to align with GitHub Copilot's native support for custom instructions and prompt files in VS Code. Here's what changed:
+
+### Key Changes
+- **`.claude/` → `.github/`**: Commands moved to GitHub Copilot prompt files
+- **`CLAUDE.md` → `.github/copilot-instructions.md`**: Global rules now use GitHub's standard
+- **New format**: Prompt files use GitHub Copilot's metadata format with Front Matter
+- **Instructions files**: Added for specific file patterns and coding standards
+
+### Benefits of the New Structure
+- **Native VS Code integration**: No custom tooling required
+- **Automatic detection**: GitHub Copilot automatically finds and uses instruction files
+- **Better organization**: Separate prompt files for different tasks
+- **Cross-editor support**: Works in VS Code, Visual Studio, and GitHub.com
+- **Team sharing**: Standard GitHub structure for sharing context across teams
+
+### Legacy Support
+The old `.claude/` structure is preserved for backward compatibility, but we recommend migrating to the new `.github/` structure for better GitHub Copilot integration.
 
 ## Resources
 
